@@ -1,0 +1,14 @@
+.cell {
+  display: inline-block;
+  margin: 5px;
+  width: 24px;
+  height: 24px;
+  background: #000;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 1px #678;
+  transition: all 0.3s ease;
+  // cursor: pointer;
+  &.active {
+    background: #fff;
+  }
+}
