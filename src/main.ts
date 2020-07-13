@@ -1,3 +1,8 @@
+/**
+ * @author: lencx
+ * @create_at: Jul 12, 2020
+ */
+
 import { createApp } from 'vue'
 
 import store from './store'

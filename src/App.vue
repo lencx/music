@@ -1,14 +1,20 @@
+<!--
+ * @author: lencx
+ * @create_at: Jul 12, 2020
+-->
+
 <template>
-  <MRow />
+  <MusicGrid />
 </template>
 
 <script>
-import MRow from './components/MGrid/MRow.vue'
+import { reactive } from 'vue'
+import MusicGrid from './views/MusicGrid.vue'
 
 export default {
   name: 'App',
   components: {
-    MRow,
+    MusicGrid,
   },
 }
 </script>

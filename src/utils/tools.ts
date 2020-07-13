@@ -16,7 +16,7 @@ export function parseHashGrid(hash: string = window.location.hash): Array<boolea
   const hashArray = hash.substr(1).split(/-+/);
   let i = 0;
   const grids = [];
-  while (i < hashArray.length - 1) {
+  while (i < hashArray.length) {
     if (/^\d+$/.test(hashArray[i])) {
       const temp = (+hashArray[i]).toString(2).padStart(12, '0').split('').map(j => j === '1');
       grids.push(temp);
@@ -67,16 +67,22 @@ export const Query = {
 };
 
 
-export function setHash(key: string, value: string | number) {
+export function setHash(key: string, value: string | number | Array<number>) {
   if (!key) return;
   const params = window.location.hash.split('-?');
   const grid = params[0];
-  const search = params[1];
+  const search = params[1] || '';
   if (key === 'grid') {
     // TODO:
+    const val = sumArray(value)
+    window.location.hash = val + (search ? `-?${search}` : '');
   } else {
     let o: any = Query.parse(search);
     o[key] = value;
-    window.history.replaceState(null, '', window.location.pathname + grid + '-?' + Query.stringify(o))
+    window.history.replaceState(null, '', window.location.pathname + grid + '-?' + Query.stringify(o));
   }
+}
+
+export function sumArray(array: Array<number>): number {
+  return eval(array.join('+'));
 }

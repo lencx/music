@@ -1,6 +1,12 @@
+<!--
+ * @author: lencx
+ * @create_at: Jul 12, 2020
+-->
+
 <template>
-  <div class="m-cell" :class="{active: state.isActive}" @click="handleClick" />
-  {{ state.isActive ? state.value : 0 }}
+  <div class="m-cell" :class="{active: state.isActive}" @click="handleTap">
+    {{ state.isActive ? state.value : 0 }}
+  </div>
 </template>
 
 <script>
@@ -9,23 +15,23 @@ import { reactive, computed } from 'vue'
 export default {
   name: 'MCell',
   props: {
-    value: Number,
+    index: Number,
   },
-  // Extraneous non-emits event listeners (sendValue) were passed to component
-  // but could not be automatically inherited because component renders fragment or text root nodes.
-  // If the listener is intended to be a component custom event listener only,
-  // declare it using the "emits" option.
-  emits: ['sendValue'],
   setup(props, { emit }) {
     const state = reactive({
       isActive: false,
-      value: computed(() => Math.pow(2, props.value)),
-    });
-    const handleClick = () => {
-      state.isActive = !state.isActive;
-      emit('sendValue', state.isActive ? state.value : 0);
-    };
-    return { state, handleClick }
+      value: computed(() => Math.pow(2, props.index)),
+    })
+
+    const methods = {
+      handleTap() {
+        state.isActive = !state.isActive
+        const sendValue = state.isActive ? state.value : 0
+        emit('sendValue', [sendValue, props.index])
+      }
+    }
+
+    return { state, ...methods }
   }
 }
 </script>
@@ -41,6 +47,9 @@ export default {
   box-shadow: 0 0 1px 1px #678;
   transition: all 0.3s ease;
   user-select: none;
+  font-size: 10px;
+  line-height: 24px;
+  color: green;
   &.active {
     background: #fff;
   }
