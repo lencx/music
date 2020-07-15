@@ -16,22 +16,27 @@ export default {
   name: 'MCell',
   props: {
     index: Number,
+    line: Number,
+    status: Boolean,
   },
   setup(props, { emit }) {
     const state = reactive({
-      isActive: false,
+      isActive: props.status,
       value: computed(() => Math.pow(2, props.index)),
     })
 
     const methods = {
       handleTap() {
         state.isActive = !state.isActive
-        const sendValue = state.isActive ? state.value : 0
-        emit('sendValue', [sendValue, props.index])
+        emit('sendValue', [state.isActive, props.index])
+        // console.log(props.line)
       }
     }
 
-    return { state, ...methods }
+    return {
+      state,
+      ...methods,
+    }
   }
 }
 </script>

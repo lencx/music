@@ -26,6 +26,16 @@ export function parseHashGrid(hash: string = window.location.hash): Array<boolea
   return grids;
 }
 
+export function parseHash(hash: string = window.location.hash): String[] {
+  if (!hash || !/^#/.test(hash)) return null;
+  const params = window.location.hash.split('-?');
+  const grid = params[0];
+  const search = params[1] || '';
+  const a = grid.substr(1).split(/-+/).filter(i => i !== '') || [];
+  const b = Query.parse(search) || null;
+  return { grid: a, options: b };
+}
+
 // export function parseHashGrid2(hash: string = window.location.hash): Array<boolean>[] | null {
 //   if (!hash || !/^#/.test(hash)) return null;
 //   const hashArray = hash.substr(1).split(/-+/).filter(i => (i === '0' || parseInt(i, 10)));
@@ -74,8 +84,13 @@ export function setHash(key: string, value: string | number | Array<number>) {
   const search = params[1] || '';
   if (key === 'grid') {
     // TODO:
-    const val = sumArray(value)
-    window.location.hash = val + (search ? `-?${search}` : '');
+    // const val = sumArray(value)
+    if (Array.isArray(value)) {
+      value = value.join('-');
+    }
+    window.location.hash = value + (search ? `-?${search}` : '');
+  } else if (key === 'setCell') {
+    // grid.split('')
   } else {
     let o: any = Query.parse(search);
     o[key] = value;
@@ -85,4 +100,18 @@ export function setHash(key: string, value: string | number | Array<number>) {
 
 export function sumArray(array: Array<number>): number {
   return eval(array.join('+'));
+}
+
+// 1 -> 2 -> 4 ... -> 1024 -> 2048 // value
+// 0 -> 1 -> 2 ... -> 11   -> 12   // index
+export function sumToBinary(sum: Number): Array<Boolean> {
+  return sum.toString(2).padStart(12, '0').split('').map(j => j === '1').reverse();
+}
+
+// const str = 'a bbb cc aavvvv zzz bb ccc'
+// findStr(str, 'cc', 'xxx', 2)
+// => 'a bbb cc aavvvv zzz bb xxxc'
+export function findStrReplace(oStr: string, matchStr: string, replaceStr: string, n: number): string {
+  const regex = new RegExp(`((?:[^${matchStr}]*${matchStr}){${n-1}}[^${matchStr}]*)${matchStr}`, 'g');
+  return oStr.replace(regex, `$1${replaceStr}`);
 }

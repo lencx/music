@@ -4,13 +4,14 @@
 -->
 
 <template>
-  row: <input type="number" :value="state.rows" @keyup.enter.native="setRows" />
+  row: <input type="number" :value="state.rows.length" @keyup.enter.native="setRows" />
   <MGrid :rows="state.rows" />
 </template>
 
 <script>
 import { reactive } from 'vue'
 import MGrid from '/@comps/MGrid/MGrid.vue'
+import { parseHash, setHash } from '/@utils/tools'
 
 export default {
   name: 'MusicGrid',
@@ -18,13 +19,33 @@ export default {
     MGrid,
   },
   setup(props) {
+    // init hash
+    const data = parseHash()
+    if (!data && !data.grid) {
+      setHash('grid', new Array(8).fill('0'))
+    }
+
     const state = reactive({
-      rows: 8,
+      rows: data.grid,
+      // TODO: music option
+      options: data.options,
     })
 
     const methods = {
       setRows(e) {
-        state.rows = +e.target.value
+        const val = +e.target.value
+        const olen = state.rows.length
+
+        if (olen > val) {
+          // remove row
+          state.rows = state.rows.slice(0, val)
+        }
+        if (olen < val) {
+          // add row
+          state.rows = [...state.rows, ...(new Array(val - olen).fill('0'))]
+        }
+
+        setHash('grid', state.rows)
       }
     }
 

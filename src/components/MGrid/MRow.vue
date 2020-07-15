@@ -5,8 +5,10 @@
 
 <template>
   <MCell
-    v-for="(_, index) in state.cells"
-    :index="index"
+    v-for="(status, idx) in state.cells"
+    :index="idx"
+    :status="status"
+    :line="index"
     @sendValue="getValue"
   />
 </template>
@@ -14,27 +16,28 @@
 <script>
 import { reactive } from 'vue'
 import MCell from './MCell.vue'
-import { setHash, parseHashGrid } from '/@utils/tools'
-
-// console.log(parseHashGrid());
+import { sumToBinary } from '/@utils/tools'
 
 export default {
   name: 'MRow',
   props: {
     index: Number,
+    sum: String,
   },
   components: {
     MCell,
   },
   setup(props) {
     const state = reactive({
-      cells: new Array(12).fill(0),
+      cells: sumToBinary(+props.sum),
     })
+
 
     const methods = {
       getValue(data) {
+        console.log(data)
+        // console.log('row => ', props.index)
         state.cells[data[1]] = data[0]
-        // setHash('grid', state.cells)
       }
     }
 
