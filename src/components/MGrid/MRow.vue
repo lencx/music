@@ -16,7 +16,7 @@
 <script>
 import { reactive } from 'vue'
 import MCell from './MCell.vue'
-import { sumToBinary } from '/@utils/tools'
+import { sumToBinary, sumArray, setHash } from '/@utils/tools'
 
 export default {
   name: 'MRow',
@@ -35,9 +35,11 @@ export default {
 
     const methods = {
       getValue(data) {
-        console.log(data)
-        // console.log('row => ', props.index)
         state.cells[data[1]] = data[0]
+        // console.log('row => ', state.cells)
+        const sum = state.cells.map((i, idx) => i ? Math.pow(2, idx) : 0)
+        // console.log('sum => ', sumArray(sum))
+        setHash('setSum', sum, data[2])
       }
     }
 

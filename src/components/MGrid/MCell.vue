@@ -28,7 +28,7 @@ export default {
     const methods = {
       handleTap() {
         state.isActive = !state.isActive
-        emit('sendValue', [state.isActive, props.index])
+        emit('sendValue', [state.isActive, props.index, props.line])
         // console.log(props.line)
       }
     }

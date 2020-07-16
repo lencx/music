@@ -19,12 +19,13 @@ export default {
     MGrid,
   },
   setup(props) {
-    // init hash
-    const data = parseHash()
-    if (!data && !data.grid) {
-      setHash('grid', new Array(8).fill('0'))
+    // init url
+    let data = parseHash() || {}
+    const defaultGrid = new Array(8).fill('0')
+    if (!data.grid) {
+      data.grid = defaultGrid;
+      setHash('grid', defaultGrid);
     }
-
     const state = reactive({
       rows: data.grid,
       // TODO: music option
@@ -35,14 +36,16 @@ export default {
       setRows(e) {
         const val = +e.target.value
         const olen = state.rows.length
+        let newHash = (parseHash() || {}).grid || []
 
+        if (olen === val) return;
         if (olen > val) {
           // remove row
-          state.rows = state.rows.slice(0, val)
+          state.rows = newHash.slice(0, val)
         }
         if (olen < val) {
           // add row
-          state.rows = [...state.rows, ...(new Array(val - olen).fill('0'))]
+          state.rows = [...newHash, ...(new Array(val - olen).fill('0'))]
         }
 
         setHash('grid', state.rows)

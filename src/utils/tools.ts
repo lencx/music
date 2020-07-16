@@ -11,30 +11,20 @@
 *  [true, false, ...]                                   -- active: select the `true`, the `false` is not selected
 * =======================================================
 */
-export function parseHashGrid(hash: string = window.location.hash): Array<boolean>[] | null {
-  if (!hash || !/^#/.test(hash)) return null;
-  const hashArray = hash.substr(1).split(/-+/);
-  let i = 0;
-  const grids = [];
-  while (i < hashArray.length) {
-    if (/^\d+$/.test(hashArray[i])) {
-      const temp = (+hashArray[i]).toString(2).padStart(12, '0').split('').map(j => j === '1');
-      grids.push(temp);
-    }
-    i++;
-  }
-  return grids;
-}
-
-export function parseHash(hash: string = window.location.hash): String[] {
-  if (!hash || !/^#/.test(hash)) return null;
-  const params = window.location.hash.split('-?');
-  const grid = params[0];
-  const search = params[1] || '';
-  const a = grid.substr(1).split(/-+/).filter(i => i !== '') || [];
-  const b = Query.parse(search) || null;
-  return { grid: a, options: b };
-}
+// export function parseHashGrid(hash: string = window.location.hash): Array<boolean>[] | null {
+//   if (!hash || !/^#/.test(hash)) return null;
+//   const hashArray = hash.substr(1).split(/-+/);
+//   let i = 0;
+//   const grids = [];
+//   while (i < hashArray.length) {
+//     if (/^\d+$/.test(hashArray[i])) {
+//       const temp = (+hashArray[i]).toString(2).padStart(12, '0').split('').map(j => j === '1');
+//       grids.push(temp);
+//     }
+//     i++;
+//   }
+//   return grids;
+// }
 
 // export function parseHashGrid2(hash: string = window.location.hash): Array<boolean>[] | null {
 //   if (!hash || !/^#/.test(hash)) return null;
@@ -76,25 +66,34 @@ export const Query = {
   },
 };
 
+export function parseHash(hash: string = window.location.hash): String[] {
+  if (!hash || !/^#/.test(hash)) return null;
+  const params = window.location.hash.split('-?');
+  const grid = params[0];
+  const search = params[1] || '';
+  const a = grid.substr(1).split(/-+/).filter(i => i !== '') || [];
+  const b = Query.parse(search) || null;
+  return { grid: a, options: b };
+}
 
-export function setHash(key: string, value: string | number | Array<number>) {
+export function setHash(key: string, value: string | number | Array<number>, site?: number) {
   if (!key) return;
   const params = window.location.hash.split('-?');
   const grid = params[0];
   const search = params[1] || '';
+  const _search = search ? `-?${search}` : '';
   if (key === 'grid') {
-    // TODO:
-    // const val = sumArray(value)
     if (Array.isArray(value)) {
       value = value.join('-');
     }
-    window.location.hash = value + (search ? `-?${search}` : '');
-  } else if (key === 'setCell') {
-    // grid.split('')
+    window.history.replaceState({}, '', '#' + value + _search);
+  } else if (key === 'setSum') {
+    const _grid = findStrReplace(grid, sumArray(value), site);
+    window.history.replaceState({}, '', _grid + _search);
   } else {
     let o: any = Query.parse(search);
     o[key] = value;
-    window.history.replaceState(null, '', window.location.pathname + grid + '-?' + Query.stringify(o));
+    window.history.replaceState({}, '', grid + '-?' + Query.stringify(o));
   }
 }
 
@@ -108,10 +107,18 @@ export function sumToBinary(sum: Number): Array<Boolean> {
   return sum.toString(2).padStart(12, '0').split('').map(j => j === '1').reverse();
 }
 
+export function findStrReplace(str, replaceStr, site) {
+  let s = 0;
+  return str.replace(/(\d+)/g, item => {
+    s++;
+    return (s-1) === site ? replaceStr : item;
+  });
+}
+
 // const str = 'a bbb cc aavvvv zzz bb ccc'
 // findStr(str, 'cc', 'xxx', 2)
 // => 'a bbb cc aavvvv zzz bb xxxc'
-export function findStrReplace(oStr: string, matchStr: string, replaceStr: string, n: number): string {
-  const regex = new RegExp(`((?:[^${matchStr}]*${matchStr}){${n-1}}[^${matchStr}]*)${matchStr}`, 'g');
-  return oStr.replace(regex, `$1${replaceStr}`);
-}
+// export function findStrReplace(oStr: string, matchStr: string, replaceStr: string, n: number): string {
+//   const regex = new RegExp(`((?:[^${matchStr}]*${matchStr}){${n-1}}[^${matchStr}]*)${matchStr}`, 'g');
+//   return oStr.replace(regex, `$1${replaceStr}`);
+// }
