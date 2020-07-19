@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <span @click="playRowSynth">▶️</span>
+  <span class="m-row-play" :class="{play: state.isPlay}" @click="playRowSynth">▶️</span>
   <MCell
     v-for="(status, idx) in state.cells"
     :index="idx"
@@ -30,8 +30,11 @@ export default {
     MCell,
   },
   setup(props) {
+    const initSum = +props.sum
+
     const state = reactive({
-      cells: sumToBinary(+props.sum),
+      cells: sumToBinary(initSum),
+      isPlay: initSum ? true : false,
     })
 
 
@@ -41,8 +44,10 @@ export default {
         // console.log('row => ', state.cells)
         const sum = state.cells.map((i, idx) => i ? Math.pow(2, idx) : 0)
         // console.log('sum => ', sumArray(sum))
+        const calcSum = sumArray(sum)
+        state.isPlay = calcSum ? true : false
         if (data[0]) noteDown(data[1])
-        setHash('setSum', sum, data[2])
+        setHash('setSum', calcSum, data[2])
       },
       playRowSynth() {
         noteDown(state.cells)
@@ -56,3 +61,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.m-row-play {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  vertical-align: top;
+  opacity: 0.2;
+  &.play {
+    opacity: 1;
+  }
+}
+</style>

@@ -4,19 +4,24 @@
 -->
 
 <template>
-  row: <input type="number" :value="state.rows.length" @keyup.enter.native="setRows" @blur.native="setRows" />
+  <div class="m-options">
+    row: <input type="number" :value="state.rows.length" @keyup.enter.native="setRows" @blur.native="setRows" />
+  </div>
   <MGrid :rows="state.rows" />
+  <Footer />
 </template>
 
 <script>
 import { reactive } from 'vue'
 import MGrid from '/@comps/MGrid/MGrid.vue'
+import Footer from '/@/layouts/Footer.vue'
 import { parseHash, setHash } from '/@utils/tools'
 
 export default {
   name: 'MusicGrid',
   components: {
     MGrid,
+    Footer,
   },
   setup(props) {
     // init url
@@ -61,5 +66,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+.m-options {
+  padding: 10px;
+}
 </style>

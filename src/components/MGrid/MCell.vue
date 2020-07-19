@@ -4,9 +4,7 @@
 -->
 
 <template>
-  <div class="m-cell" :class="{active: state.isActive}" @click="handleTap">
-    {{ state.isActive ? state.value : 0 }}
-  </div>
+  <div class="m-cell" :class="{active: state.isActive}" @click="handleTap" />
 </template>
 
 <script>
@@ -44,12 +42,12 @@ export default {
 <style lang="scss">
 .m-cell {
   display: inline-block;
-  margin: 5px;
+  margin: 2px;
   width: 24px;
   height: 24px;
   background: #000;
   border-radius: 5px;
-  box-shadow: 0 0 1px 1px #678;
+  // box-shadow: 0 0 1px 1px #678;
   transition: all 0.3s ease;
   user-select: none;
   font-size: 10px;

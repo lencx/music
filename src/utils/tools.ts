@@ -88,7 +88,7 @@ export function setHash(key: string, value: string | number | Array<number>, sit
     }
     window.history.replaceState({}, '', '#' + value + _search);
   } else if (key === 'setSum') {
-    const _grid = findStrReplace(grid, sumArray(value), site);
+    const _grid = findStrReplace(grid, value, site);
     window.history.replaceState({}, '', _grid + _search);
   } else {
     let o: any = Query.parse(search);
