@@ -9,11 +9,7 @@
 
 <script>
 import { reactive } from 'vue'
-import { MusicTest } from '/@utils/music'
 import MusicGrid from './views/MusicGrid.vue'
-
-// TODO: test tonejs
-MusicTest()
 
 export default {
   name: 'App',

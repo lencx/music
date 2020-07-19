@@ -4,7 +4,7 @@
 -->
 
 <template>
-  row: <input type="number" :value="state.rows.length" @keyup.enter.native="setRows" />
+  row: <input type="number" :value="state.rows.length" @keyup.enter.native="setRows" @blur.native="setRows" />
   <MGrid :rows="state.rows" />
 </template>
 
