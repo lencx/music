@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { reactive, computed } from 'vue'
+import { reactive } from 'vue'
 
 export default {
   name: 'MCell',
@@ -20,7 +20,7 @@ export default {
   setup(props, { emit }) {
     const state = reactive({
       isActive: props.status,
-      value: computed(() => Math.pow(2, props.index)),
+      // value: computed(() => Math.pow(2, props.index)),
     })
 
     const methods = {

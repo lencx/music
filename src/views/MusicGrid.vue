@@ -7,20 +7,23 @@
   <div class="m-options">
     row: <input type="number" :value="state.rows.length" @keyup.enter.native="setRows" @blur.native="setRows" />
   </div>
+  <MControls />
   <MGrid :rows="state.rows" />
   <Footer />
 </template>
 
 <script>
 import { reactive } from 'vue'
-import MGrid from '/@comps/MGrid/MGrid.vue'
-import Footer from '/@/layouts/Footer.vue'
 import { parseHash, setHash } from '/@utils/tools'
+import MGrid from '/@comps/MGrid/MGrid.vue'
+import MControls from '/@comps/MGrid/MControls.vue'
+import Footer from '/@/layouts/Footer.vue'
 
 export default {
   name: 'MusicGrid',
   components: {
     MGrid,
+    MControls,
     Footer,
   },
   setup(props) {

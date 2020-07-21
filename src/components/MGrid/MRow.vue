@@ -16,9 +16,9 @@
 
 <script>
 import { reactive } from 'vue'
-import MCell from './MCell.vue'
 import { sumToBinary, sumArray, setHash } from '/@utils/tools'
 import { noteDown } from '/@utils/music'
+import MCell from './MCell.vue'
 
 export default {
   name: 'MRow',
@@ -36,7 +36,6 @@ export default {
       cells: sumToBinary(initSum),
       isPlay: initSum ? true : false,
     })
-
 
     const methods = {
       getValue(data) {

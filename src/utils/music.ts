@@ -20,6 +20,20 @@ export function noteDown(notes: boolean[] | number): void {
   synth.triggerAttackRelease(notesToPlay, '16n');
 }
 
+export function playGrid() {
+  // TODO:
+}
+
+export function pauseGrid() {
+  // TODO:
+}
+
+export function resetGrid(rows) {
+  // TODO:
+  // const data = new Array(rows).fill('0')
+  // setHash('grid', data)
+}
+
 // c、d、e、f、g、a、b
 // do、re、mi、fa、sol、la、xi
 

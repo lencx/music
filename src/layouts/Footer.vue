@@ -1,3 +1,8 @@
+<!--
+ * @author: lencx
+ * @create_at: Jul 20, 2020
+-->
+
 <template>
   <div class="footer">
     <a href="https://github.com/vuejs/vue-next">vue</a>
