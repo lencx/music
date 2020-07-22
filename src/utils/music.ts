@@ -1,4 +1,10 @@
+/**
+ * @author: lencx
+ * @create_at: Jul 17, 2020
+ */
+
 import * as Tone from 'tone';
+import { parseHash, setHash } from './tools';
 
 export const synth = new Tone.PolySynth(Tone.Synth, Tone.MonoSynth).toDestination();
 // const piano = ['C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4'];
@@ -15,23 +21,19 @@ export function noteDown(notes: boolean[] | number): void {
     notesToPlay.push(classic[notes]);
   } else {
     // mulit
-    notes.forEach((s, i) => s && notesToPlay.push(classic[i]) )
+    notes.forEach((s, i) => s && notesToPlay.push(classic[i]));
   }
   synth.triggerAttackRelease(notesToPlay, '16n');
 }
 
-export function playGrid() {
-  // TODO:
-}
-
-export function pauseGrid() {
-  // TODO:
-}
-
-export function resetGrid(rows) {
-  // TODO:
-  // const data = new Array(rows).fill('0')
-  // setHash('grid', data)
+export function initGrid() {
+  const data = parseHash() || {};
+  if (!data.grid) {
+    const defaultGrid = new Array(8).fill('0');
+    data.grid = defaultGrid;
+    setHash('grid', defaultGrid);
+  }
+  return data;
 }
 
 // c、d、e、f、g、a、b

@@ -1,5 +1,16 @@
 # Vue3 Notes
 
+## Vue3 Features
+
+* Composition API (Now built-in)
+  - Better organization
+  - Sharing/reusing the code
+* Multiple root elements (Template syntax )
+* Suspense
+* Multiple V-models
+* Better Reactivity
+* Portals
+
 ## There are currently three limitations you may have run into when working with Vue2
 
 * As your components get larger readability gets difficult.
@@ -38,6 +49,36 @@
 * The component is too large and needs to be organized by feature.
 * Need to reuse code across other components.
 * You & your team prefer the alternative syntax.
+
+## LifeCycle
+
+### Composition API LifeCycle Methods
+
+* onBeforeMount
+* onMounted
+* onBeforeUpdate
+* onUpdated
+* onBeforeUnmount
+* onUnmounted
+* onActivated
+* onDeactivated
+* onErrorCaptured
+
+### Lifecycle Hooks
+
+* `beforeCreate`: Called immediately after instance is initialized, before options are processed.
+* `created`: Called after the instance has been created.
+* `beforeMount`: Right before mounting of the DOM begins.
+* `mounted`: Called when the instance has been mounted (browser updated).
+* `beforeUpdate`: Called when reactive data has changed, before the DOM is re-rendered.
+* `updated`: Called when reactive data has changed, and the DOM has been re-rendered.
+* `beforeDestroy`: Called right before the Vue instance is destroyed.
+* `destroyed`: Called after the Vue instance has been destroyed.
+
+### Two New Vue 3 LifeCycle Methods
+
+* `onRenderTracked`: called when a reactive dependency is first being accessed in the render function, during render. This dependency will now be tracked. This is helpful to see which dependencies are being tracked, for debugging.
+* `onRenderTriggered`: Called when a new render is triggered, allowing you to inspect what dependency triggered a component to re-render.
 
 ## Setup & Reactive References
 

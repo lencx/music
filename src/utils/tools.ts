@@ -89,6 +89,7 @@ export function setHash(key: string, value: string | number | Array<number>, sit
     window.history.replaceState({}, '', '#' + value + _search);
   } else if (key === 'setSum') {
     const _grid = findStrReplace(grid, value, site);
+    // console.log(`[92] tools.ts: `, value);
     window.history.replaceState({}, '', _grid + _search);
   } else {
     let o: any = Query.parse(search);

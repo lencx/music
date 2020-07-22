@@ -4,11 +4,11 @@
 -->
 
 <template>
-  <div class="m-cell" :class="{active: state.isActive}" @click="handleTap" />
+  <div class="m-cell" :class="{active: isActive}" @click="handleTap" />
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { ref, watch } from 'vue'
 
 export default {
   name: 'MCell',
@@ -18,23 +18,14 @@ export default {
     status: Boolean,
   },
   setup(props, { emit }) {
-    const state = reactive({
-      isActive: props.status,
-      // value: computed(() => Math.pow(2, props.index)),
-    })
+    const isActive = ref(props.status)
 
-    const methods = {
-      handleTap() {
-        state.isActive = !state.isActive
-        emit('sendValue', [state.isActive, props.index, props.line])
-        // console.log(props.line)
-      }
+    const handleTap = () => {
+      isActive.value = !isActive.value
+      emit('sendValue', [isActive.value, props.index, props.line])
     }
 
-    return {
-      state,
-      ...methods,
-    }
+    return { isActive, handleTap }
   }
 }
 </script>

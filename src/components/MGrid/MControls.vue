@@ -5,25 +5,19 @@
 
 <template>
   <div class="m-controls">
-    <span @click="playGrid" title="play">▶️</span>
-    <span @click="pauseGrid" title="pause">⏸️</span>
-    <span @click="resetGrid" title="reset">🔄</span>
+    <span @click="play" title="play">▶️</span>
+    <span @click="pause" title="pause">⏸️</span>
+    <span @click="reset" title="reset">🔄</span>
   </div>
 </template>
 
 <script>
 export default {
   name: 'MControls',
-  setup() {
-    const methods = {
-      playGrid() {},
-      pauseGrid() {},
-      resetGrid() {},
-    }
-
-    return {
-      ...methods,
-    }
-  }
+  props: {
+    reset: Function,
+    play: Function,
+    pause: Function,
+  },
 }
 </script>

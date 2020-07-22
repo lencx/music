@@ -7,17 +7,22 @@
   <div class="m-options">
     row: <input type="number" :value="state.rows.length" @keyup.enter.native="setRows" @blur.native="setRows" />
   </div>
-  <MControls />
+  <MControls
+    :reset="resetGrid"
+    :play="playGrid"
+    :pause="pauseGrid"
+  />
   <MGrid :rows="state.rows" />
   <Footer />
 </template>
 
 <script>
 import { reactive } from 'vue'
-import { parseHash, setHash } from '/@utils/tools'
 import MGrid from '/@comps/MGrid/MGrid.vue'
 import MControls from '/@comps/MGrid/MControls.vue'
 import Footer from '/@/layouts/Footer.vue'
+import { initGrid } from '/@utils/music'
+import { parseHash, setHash } from '/@utils/tools'
 
 export default {
   name: 'MusicGrid',
@@ -26,25 +31,19 @@ export default {
     MControls,
     Footer,
   },
-  setup(props) {
-    // init url
-    let data = parseHash() || {}
-    const defaultGrid = new Array(8).fill('0')
-    if (!data.grid) {
-      data.grid = defaultGrid;
-      setHash('grid', defaultGrid);
-    }
+  setup() {
+    const initData = initGrid()
     const state = reactive({
-      rows: data.grid,
+      rows: initData.grid,
       // TODO: music option
-      options: data.options,
+      options: initData.options,
     })
 
     const methods = {
       setRows(e) {
         const val = +e.target.value
         const olen = state.rows.length
-        let newHash = (parseHash() || {}).grid || []
+        const newHash = (parseHash() || {}).grid || []
 
         if (olen === val) return;
         if (olen > val) {
@@ -57,7 +56,22 @@ export default {
         }
 
         setHash('grid', state.rows)
-      }
+      },
+      resetGrid() {
+        // TODO:
+        console.log('reset')
+        // const data = new Array(state.rows.length).fill('0')
+        // state.rows = data;
+        // setHash('grid', data)
+      },
+      playGrid() {
+        // TODO:
+        console.log('play')
+      },
+      pauseGrid() {
+        // TODO:
+        console.log('pause')
+      },
     }
 
     return {
