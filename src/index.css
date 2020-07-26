@@ -7,13 +7,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+:root {
+  --theme-primary: #61dafb;
+  --green: #4fc08d;
+  --black: #24292e;
+
+  --m-cell-bg: radial-gradient(#000, #222);
+  --m-cell-active: radial-gradient(#fff 20%, #999);
+  --input-bg: linear-gradient(to bottom, #555, #000, #555);
+}
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 
-  background: #235;
-  color: #fff;
+  background: var(--black);
+  color: #999;
   min-height: 100vh;
 }

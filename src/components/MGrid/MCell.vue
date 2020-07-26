@@ -37,7 +37,7 @@ export default {
   margin: 2px;
   width: 24px;
   height: 24px;
-  background: #000;
+  background: var(--m-cell-bg);
   border-radius: 5px;
   // box-shadow: 0 0 1px 1px #678;
   transition: all 0.3s ease;
@@ -46,7 +46,8 @@ export default {
   line-height: 24px;
   color: green;
   &.active {
-    background: #fff;
+    // background: #fff;
+    background: var(--m-cell-active);
   }
 }
 </style>

@@ -12,7 +12,7 @@ synth.set({ detune: -900 });
 
 export const musicTypes = {
   classic: [
-    'B3', 'C#4', 'F#4', 'G#4',
+    'B4', 'C#4', 'F#4', 'G#4',
     'C#5', 'D#5', 'E5', 'G#5',
     'B5', 'C#6', 'F#6', 'G#6'
   ],
@@ -37,7 +37,7 @@ export function playAudio(notes: boolean[] | number, musicType: string = 'classi
   }
   // play a chord
   console.log(`audio: `, notesToPlay);
-  if (!isArray) synth.set({ detune: -1800 });
+  if (!isArray) synth.set({ detune: -1200 });
   synth.triggerAttackRelease(notesToPlay, isArray ? '4n' : '8n.');
 }
 

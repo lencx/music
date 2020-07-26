@@ -5,13 +5,11 @@
 
 <template>
   <div class="footer">
-    <a href="https://github.com/vuejs/vue-next">Vue</a>
+    <a class="icon" href="https://www.nofwl.com">
+      <img src="/lencx.png" />
+    </a>
     {{` `}}
-    <a href="https://github.com/Tonejs/Tone.js">Tone.js</a>
-    {{` `}}
-    <a href="https://www.nofwl.com">lencx</a>
-    {{` `}}
-    <a class="github" href="https://www.github.com/lencx/music">
+    <a class="icon github" href="https://www.github.com/lencx/music">
       <img src="/github.png" />
     </a>
   </div>
@@ -23,13 +21,14 @@
   padding: 10px;
   a {
     display: inline-block;
-    height: 24px;
-    line-height: 24px;
     color: #d2d2d2;
-    padding: 0 4px;
-    &.github {
+    &.icon {
       width: 20px;
+      height: 20px;
       vertical-align: bottom;
+      box-shadow: 0 0 5px #999;
+      border-radius: 50%;
+      font-size: 0;
       img {
         width: 100%;
       }

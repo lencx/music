@@ -79,10 +79,12 @@ export default {
       },
       resetGrid() {
         console.log('reset grid')
-        state.reset = Date.now()
         const data = new Array(olen).fill('0')
         setHash('grid', data)
-        clearInterval(musicInterval)
+        clearInterval(state.musicInterval)
+        state.reset = Date.now()
+        state.playRows = new Array(olen).fill(null)
+        state.current = null
       },
       playGrid() {
         console.log('play music')
@@ -92,7 +94,7 @@ export default {
         state.isPause = false
         playAudio(rows[0])
         state.musicInterval = setInterval(() => {
-          const playEnd = state.current > rows.length - 2;
+          const playEnd = state.current > rows.length - 2
           if (!state.isPause) {
             state.current = !playEnd ? (state.current + 1) : 0
             console.log(state.current)
@@ -121,5 +123,15 @@ export default {
 <style lang="scss">
 .m-options {
   padding: 10px;
+}
+input {
+  background: var(--input-bg);
+  border: none;
+  width: 60px;
+  border-radius: 5px;
+  height: 20px;
+  line-height: 20px;
+  color: #eee;
+  outline: none;
 }
 </style>

@@ -4,9 +4,9 @@
 
 ![note_1](./public/note_1.gif)
 ![note_2](./public/note_2.gif)
-![note_3](./public/note_3.gif)
-![note_4](./public/note_4.gif)
-![note_5](./public/note_5.gif)
+![note_3](./public/note_3.gif)\
+![note_4](./public/note_4.gif)\
+![note_5](./public/note_5.gif)\
 
 | 符号         | 中文             | 英文                                     |
 | ------------ | ---------------- | ---------------------------------------- |
