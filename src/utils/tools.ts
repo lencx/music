@@ -42,7 +42,7 @@
 // }
 
 export const Query = {
-  parse(search: string = window.location.search) {
+  parse(search?: string = window.location.search) {
     if (!search) return;
     const hashes = search.slice(search.indexOf('?') + 1).split('&');
     return hashes.reduce((acc, hash) => {
@@ -66,7 +66,7 @@ export const Query = {
   },
 };
 
-export function parseHash(hash: string = window.location.hash): String[] {
+export function parseHash(hash: string = window.location.hash): Array<string> {
   if (!hash || !/^#/.test(hash)) return null;
   const params = window.location.hash.split('-?');
   const grid = params[0];

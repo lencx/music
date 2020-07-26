@@ -4,20 +4,23 @@
 -->
 
 <template>
-  <span class="m-row-play" :class="{play: state.isPlay}" @click="playRowSynth">▶️</span>
-  <MCell
-    v-for="(status, idx) in state.cells"
-    :index="idx"
-    :status="status"
-    :line="index"
-    @sendValue="getValue"
-  />
+  <div class="m-row" :class="{'curr-play': current === index}">
+    <span class="row-btn" :class="{'row-play': state.isPlay}" @click="playRowSynth">▶️</span>
+    <MCell
+      v-for="(status, idx) in state.cells"
+      :index="idx"
+      :status="status"
+      :line="index"
+      :reset="reset"
+      @sendValue="getValue"
+    />
+  </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, watchEffect } from 'vue'
 import { sumToBinary, sumArray, setHash } from '/@utils/tools'
-import { noteDown } from '/@utils/music'
+import { playAudio } from '/@utils/music'
 import MCell from './MCell.vue'
 
 export default {
@@ -25,17 +28,29 @@ export default {
   props: {
     index: Number,
     sum: String,
+    reset: Number,
+    current: Number,
   },
   components: {
     MCell,
   },
-  setup(props) {
+  emits: ['sendAudio'],
+  setup(props, { emit }) {
     const initSum = +props.sum
 
     const state = reactive({
       cells: sumToBinary(initSum),
       isPlay: initSum ? true : false,
     })
+
+    emit('sendAudio', [state.cells, props.index])
+
+    watchEffect(() => {
+      if (props.reset) {
+        state.cells = sumToBinary(0)
+        state.isPlay = false
+      }
+    }, [props.reset])
 
     const methods = {
       getValue(data) {
@@ -45,11 +60,12 @@ export default {
         // console.log('sum => ', sumArray(sum))
         const calcSum = sumArray(sum)
         state.isPlay = calcSum ? true : false
-        if (data[0]) noteDown(data[1])
+        if (data[0]) playAudio(data[1])
         setHash('setSum', calcSum, data[2])
+        emit('sendAudio', [state.cells, props.index])
       },
       playRowSynth() {
-        noteDown(state.cells)
+        playAudio(state.cells)
       }
     }
 
@@ -62,14 +78,23 @@ export default {
 </script>
 
 <style lang="scss">
-.m-row-play {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  vertical-align: top;
-  opacity: 0.2;
-  &.play {
-    opacity: 1;
+.m-row {
+  transform: scale(1);
+  transition: all 0.3s linear;
+  opacity: 1;
+  &.curr-play {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+  .row-btn {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: top;
+    opacity: 0.2;
+    &.row-play {
+      opacity: 1;
+    }
   }
 }
 </style>

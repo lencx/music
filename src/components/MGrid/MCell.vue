@@ -4,11 +4,15 @@
 -->
 
 <template>
-  <div class="m-cell" :class="{active: isActive}" @click="handleTap" />
+  <div
+    class="m-cell"
+    :class="{active: status}"
+    @click="handleTap"
+  />
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 export default {
   name: 'MCell',
@@ -18,14 +22,11 @@ export default {
     status: Boolean,
   },
   setup(props, { emit }) {
-    const isActive = ref(props.status)
-
     const handleTap = () => {
-      isActive.value = !isActive.value
-      emit('sendValue', [isActive.value, props.index, props.line])
+      emit('sendValue', [!props.status, props.index, props.line])
     }
 
-    return { isActive, handleTap }
+    return { handleTap }
   }
 }
 </script>
