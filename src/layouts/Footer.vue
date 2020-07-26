@@ -5,14 +5,14 @@
 
 <template>
   <div class="footer">
-    <a href="https://github.com/vuejs/vue-next">vue</a>
-    {{` | `}}
+    <a href="https://github.com/vuejs/vue-next">Vue</a>
+    {{` `}}
+    <a href="https://github.com/Tonejs/Tone.js">Tone.js</a>
+    {{` `}}
+    <a href="https://www.nofwl.com">lencx</a>
+    {{` `}}
     <a class="github" href="https://www.github.com/lencx/music">
       <img src="/github.png" />
-    </a>
-    {{` | `}}
-    <a href="https://www.nofwl.com">
-      lencx
     </a>
   </div>
 </template>
