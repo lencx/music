@@ -15,7 +15,6 @@
   </div>
 </template>
 
-
 <style lang="scss">
 .footer {
   padding: 10px;

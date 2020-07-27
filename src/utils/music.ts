@@ -29,7 +29,7 @@ export const musicTypes = {
   // defalut: ['C', '#C', 'D', '#D', 'E', 'F', '#F', 'G', '#G', 'A', '#A', 'B'],
 };
 
-export function playAudio(notes: boolean[] | number, musicType: string = 'classic'): void {
+export function playAudio(notes: boolean[] | number, musicType?: string = 'classic'): void {
   const notesToPlay = [];
   const isArray = Array.isArray(notes);
   const _type = musicTypes[musicType];

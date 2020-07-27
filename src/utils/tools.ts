@@ -3,44 +3,6 @@
  * @create_at: Jul 11, 2020
  */
 
-/*
-* @method parseHashGrid
-* ======================================================
-*  [0, 0, 0, 0, 0,  0,  0,  0,   0,   0,   0,    0   ]  -- default
-*  [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048]  -- sum of selected grids
-*  [true, false, ...]                                   -- active: select the `true`, the `false` is not selected
-* =======================================================
-*/
-// export function parseHashGrid(hash: string = window.location.hash): Array<boolean>[] | null {
-//   if (!hash || !/^#/.test(hash)) return null;
-//   const hashArray = hash.substr(1).split(/-+/);
-//   let i = 0;
-//   const grids = [];
-//   while (i < hashArray.length) {
-//     if (/^\d+$/.test(hashArray[i])) {
-//       const temp = (+hashArray[i]).toString(2).padStart(12, '0').split('').map(j => j === '1');
-//       grids.push(temp);
-//     }
-//     i++;
-//   }
-//   return grids;
-// }
-
-// export function parseHashGrid2(hash: string = window.location.hash): Array<boolean>[] | null {
-//   if (!hash || !/^#/.test(hash)) return null;
-//   const hashArray = hash.substr(1).split(/-+/).filter(i => (i === '0' || parseInt(i, 10)));
-//   const grids = [];
-//   for (let i = hashArray.length - 1; i >= 0; i--) {
-//     let temp = Array(12).fill(false);
-//     // 11 = 12 - 1
-//     for (let j = 11; j >= 0; j--) {
-//       temp[j] = (+hashArray[i] & (1 << (j))) !== 0;
-//     }
-//     grids.push(temp.reverse());
-//   }
-//   return grids;
-// }
-
 export const Query = {
   parse(search?: string = window.location.search) {
     if (!search) return;
@@ -66,7 +28,7 @@ export const Query = {
   },
 };
 
-export function parseHash(hash: string = window.location.hash): Array<string> {
+export function parseHash(hash?: string = window.location.hash): Array<string> {
   if (!hash || !/^#/.test(hash)) return null;
   const params = window.location.hash.split('-?');
   const grid = params[0];
@@ -104,11 +66,11 @@ export function sumArray(array: Array<number>): number {
 
 // 1 -> 2 -> 4 ... -> 1024 -> 2048 // value
 // 0 -> 1 -> 2 ... -> 11   -> 12   // index
-export function sumToBinary(sum: Number): Array<Boolean> {
+export function sumToBinary(sum: number): Array<boolean> {
   return sum.toString(2).padStart(12, '0').split('').map(j => j === '1').reverse();
 }
 
-export function findStrReplace(str, replaceStr, site) {
+export function findStrReplace(str: string, replaceStr: string, site: number) {
   let s = 0;
   return str.replace(/(\d+)/g, item => {
     s++;
@@ -116,10 +78,21 @@ export function findStrReplace(str, replaceStr, site) {
   });
 }
 
-// const str = 'a bbb cc aavvvv zzz bb ccc'
-// findStr(str, 'cc', 'xxx', 2)
-// => 'a bbb cc aavvvv zzz bb xxxc'
-// export function findStrReplace(oStr: string, matchStr: string, replaceStr: string, n: number): string {
-//   const regex = new RegExp(`((?:[^${matchStr}]*${matchStr}){${n-1}}[^${matchStr}]*)${matchStr}`, 'g');
-//   return oStr.replace(regex, `$1${replaceStr}`);
-// }
+// https://github.com/30-seconds/30-seconds-of-code/blob/master/snippets/copyToClipboard.md
+export function copyToClipboard(str: string) {
+  const el = document.createElement('textarea');
+  el.value = str;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  const selected =
+    document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  if (selected) {
+    document.getSelection().removeAllRanges();
+    document.getSelection().addRange(selected);
+  }
+};
