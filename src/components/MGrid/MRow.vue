@@ -5,7 +5,9 @@
 
 <template>
   <div class="m-row" :class="{'curr-play': current === index}">
-    <span class="row-btn" :class="{'row-play': state.isPlay}" @click="playRowSynth">▶️</span>
+    <span class="row-btn" :class="{'row-play': state.isPlay}" @click="playRowSynth">
+      <icon-play-arrow fill="var(--yellow)" />
+    </span>
     <MCell
       v-for="(status, idx) in state.cells"
       :index="idx"
@@ -19,6 +21,7 @@
 
 <script>
 import { reactive, watchEffect } from 'vue'
+import IconPlayArrow from '/@comps/Icon/IconPlayArrow.vue'
 import { sumToBinary, sumArray, setHash } from '/@utils/tools'
 import { playAudio } from '/@utils/music'
 import MCell from './MCell.vue'
@@ -33,6 +36,7 @@ export default {
   },
   components: {
     MCell,
+    IconPlayArrow,
   },
   emits: ['sendAudio'],
   setup(props, { emit }) {
@@ -81,17 +85,23 @@ export default {
 .m-row {
   transform: scale(1);
   transition: all 0.3s linear;
-  opacity: 1;
+  opacity: 0.8;
+  height: 28px;
+  line-height: 28px;
   &.curr-play {
-    opacity: 0.5;
+    opacity: 0.7;
     transform: scale(0.95);
+    .m-cell.active {
+      background: var(--m-cell-active-play);
+    }
   }
   .row-btn {
     display: inline-block;
+    margin: 2px 2px 0 -4px;
     width: 24px;
     height: 24px;
-    vertical-align: top;
     opacity: 0.2;
+    vertical-align: 2px;
     &.row-play {
       opacity: 1;
     }

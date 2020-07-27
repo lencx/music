@@ -11,6 +11,11 @@ export const synth = new Tone.PolySynth(Tone.Synth, Tone.MonoSynth).toDestinatio
 synth.set({ detune: -900 });
 
 export const musicTypes = {
+  // classic: [
+  //   'B7', 'C#5', 'F#8', 'G#5',
+  //   'C#6', 'D#8', 'E5', 'G#8',
+  //   'B8', 'C#8', 'F#5', 'G#4'
+  // ],
   classic: [
     'B4', 'C#4', 'F#4', 'G#4',
     'C#5', 'D#5', 'E5', 'G#5',
@@ -30,11 +35,12 @@ export function playAudio(notes: boolean[] | number, musicType: string = 'classi
   const _type = musicTypes[musicType];
   if (!isArray) {
     // single
-    notesToPlay.push(_type[notes]);
+    _type[notes] && notesToPlay.push(_type[notes]);
   } else {
     // mulit
     notes.forEach((s, i) => s && notesToPlay.push(_type[i]));
   }
+  if (!notesToPlay.length) return;
   // play a chord
   console.log(`audio: `, notesToPlay);
   if (!isArray) synth.set({ detune: -1200 });

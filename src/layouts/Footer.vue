@@ -22,6 +22,7 @@
   a {
     display: inline-block;
     color: #d2d2d2;
+    margin: 0 5px;
     &.icon {
       width: 20px;
       height: 20px;

@@ -1,10 +1,11 @@
-body {
+html, body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 code {
@@ -14,11 +15,16 @@ code {
 
 :root {
   --theme-primary: #61dafb;
-  --green: #4fc08d;
+  --green: #439D9A;
+  --blue: #4281A4;
+  --red: #AE474C;
+  --yellow: #D4B483;
   --black: #24292e;
 
-  --m-cell-bg: radial-gradient(#000, #222);
-  --m-cell-active: radial-gradient(#fff 20%, #999);
+  --m-cell-bg: radial-gradient(#000, #111);
+  --m-cell-active: #E4DFDA;
+  /* --m-cell-active: linear-gradient(to bottom, #000, #fff, #000); */
+  --m-cell-active-play: radial-gradient(#fff, var(--red));
   --input-bg: linear-gradient(to bottom, #555, #000, #555);
 }
 

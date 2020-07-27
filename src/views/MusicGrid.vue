@@ -5,13 +5,15 @@
 
 <template>
   <div class="m-options">
-    row:
-    <input
-      type="number"
-      :value="state.rows.length"
-      @keyup.enter.native="setRows"
-      @blur.native="setRows"
-    />
+    <div class="add-row">
+      <icon-play-list class="icon" fill="#999" />
+      <input
+        type="number"
+        :value="state.rows.length"
+        @keyup.enter.native="setRows"
+        @blur.native="setRows"
+      />
+    </div>
   </div>
   <MControls
     :reset="resetGrid"
@@ -31,9 +33,10 @@
 import { reactive, watch } from 'vue'
 import MGrid from '/@comps/MGrid/MGrid.vue'
 import MControls from '/@comps/MGrid/MControls.vue'
+import IconPlayList from '/@comps/Icon/IconPlayList.vue'
 import Footer from '/@/layouts/Footer.vue'
 import { initGrid, playAudio } from '/@utils/music'
-import { parseHash, setHash } from '/@utils/tools'
+import { parseHash, setHash, sumArray } from '/@utils/tools'
 
 export default {
   name: 'MusicGrid',
@@ -41,6 +44,7 @@ export default {
     MGrid,
     MControls,
     Footer,
+    IconPlayList,
   },
   setup() {
     const initData = initGrid()
@@ -78,6 +82,7 @@ export default {
         setHash('grid', state.rows)
       },
       resetGrid() {
+        if (!sumArray(parseHash().grid || [])) return
         console.log('reset grid')
         const data = new Array(olen).fill('0')
         setHash('grid', data)
@@ -97,7 +102,7 @@ export default {
           const playEnd = state.current > rows.length - 2
           if (!state.isPause) {
             state.current = !playEnd ? (state.current + 1) : 0
-            console.log(state.current)
+            console.log('current row:', state.current)
             playAudio(rows[state.current])
           }
         }, 60 * 1000 / 100)
@@ -123,15 +128,22 @@ export default {
 <style lang="scss">
 .m-options {
   padding: 10px;
-}
-input {
-  background: var(--input-bg);
-  border: none;
-  width: 60px;
-  border-radius: 5px;
-  height: 20px;
-  line-height: 20px;
-  color: #eee;
-  outline: none;
+  .add-row {
+    .icon {
+      vertical-align: middle;
+      margin-right: 3px;
+    }
+    input {
+      background: var(--input-bg);
+      border: none;
+      width: 50px;
+      border-radius: 5px;
+      height: 20px;
+      line-height: 20px;
+      color: #eee;
+      outline: none;
+      text-align: center;
+    }
+  }
 }
 </style>

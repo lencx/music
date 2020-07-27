@@ -4,8 +4,9 @@
 -->
 
 <template>
-  <div v-for="(sum, index) in rows">
+  <div class="m-grid">
     <MRow
+      v-for="(sum, index) in rows"
       :index="index"
       :sum="sum"
       :reset="reset"
@@ -46,3 +47,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.m-grid {
+  user-select: none;
+}
+</style>
